@@ -15,7 +15,7 @@
     "nodejs"
   ],
   "author": "James Fraser",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/wulfgarpro/trains/issues"
   },
