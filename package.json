@@ -4,7 +4,7 @@
   "description": "A code challenge from ThoughtWorks",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine-node spec --verbose"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/wulfgarpro/trains#readme",
   "devDependencies": {
-    "jasmine": "^2.4.1"
+    "jasmine-node": "^1.14.5"
   }
 }
