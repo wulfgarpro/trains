@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/wulfgarpro/trains/issues"
   },
-  "homepage": "https://github.com/wulfgarpro/trains#readme"
+  "homepage": "https://github.com/wulfgarpro/trains#readme",
+  "devDependencies": {
+    "jasmine": "^2.4.1"
+  }
 }
