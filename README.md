@@ -35,8 +35,17 @@ Implementation:
 
 Directed graph using adjacency list implementation.
 
+...
+
+Future work:
+------------
+
+...
+
 How to run:
 -----------
 
-$> `./bin/app input.txt`
-
+1. Install latest nodejs for your platform
+2. Install jasmine-node globally: `$> npm install -G jasmine-node`
+3. Run tests: `$> npm test`
+4. Run runner: `$> ./bin/run input.txt`
