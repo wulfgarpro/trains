@@ -33,14 +33,12 @@ The purpose of this problem is to help the railroad provide its customers with i
 Implementation:
 ---------------
 
-Directed graph using adjacency list implementation.
-
-...
+At it's core, Trains is a Directed Graph (Digraph) with an Adjacency List implementation.  Trains was written entirely with NodeJS.  I chose a command line application with strictly synchronous functions to demonstrate JavaScript's ability to run as a systems language in conjunction with NodeJS.  I followed TDD principles, focusing mainly on KISS and the single responsibility principle.  I did not deviate from JavaScript's classicial inheritance model.
 
 Future work:
 ------------
 
-...
+Extend synchronous functions with asynchronous varints and expose via REST API.
 
 How to run:
 -----------
