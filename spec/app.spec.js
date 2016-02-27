@@ -3,7 +3,9 @@ var App = require('./../app');
 describe('App', function(done) {
     var app,
         testInputFile = __dirname + '/test_input.txt',
-        testInputMultilineFile = __dirname + '/test_input_multiline.txt';
+        testInputMultilineFile = __dirname + '/test_input_multiline.txt',
+        testDataA = 'AB5,BC4,CD8,DC8,DE6,AD5,CE2,EB3,AE7',
+        testDataB = 'AB5,BC4,CD8,DC8,DE6,AD5,CE2,EB3,AE7,AB5,BC4,CD8,DC8,DE6,AD5,CE2,EB3,AE7';
 
     beforeEach(function() {
         app = new App(testInputFile);
@@ -52,7 +54,13 @@ describe('App', function(done) {
     });
     describe('readInputFile(inputFile)', function(done) {
         it('Reads in inputFile and returns data as string', function(done) {
-            expect(true).toBe(false, 'test not implemented');
+            var data = app.readInputFile(testInputFile);
+            expect(data).toBe(testDataA);
+            done();
+        });
+        it('Reads in inputFile with multiple lines and returns data as one string', function(done) {
+            var data = app.readInputFile(testInputMultilineFile);
+            expect(data).toBe(testDataB);
             done();
         });
     });
