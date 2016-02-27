@@ -38,7 +38,7 @@ var App = function(inputFile) {
         var digraph = this.buildDigraph(nodesAndRoutes);
         this.digraph = digraph;
     }
-}
+};
 
 
 /**
