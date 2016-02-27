@@ -29,16 +29,16 @@ describe('App', function(done) {
             done();
         });
         it('Calls to make nodes and routes', function(done) {
-            var spymakeNodesAndRoutes = function() {};
-            App.prototype.makeNodesAndRoutes = spymakeNodesAndRoutes;
+            var spyMakeNodesAndRoutes = function() {};
+            App.prototype.makeNodesAndRoutes = spyMakeNodesAndRoutes;
             spyOn(app, 'makeNodesAndRoutes');
             app.constructor.call(app, testInputFile);
             expect(app.makeNodesAndRoutes).toHaveBeenCalled();
             done();
         });
         it('Doesn\'t call to make nodes and routes', function(done) {
-            var spymakeNodesAndRoutes = function() {};
-            App.prototype.makeNodesAndRoutes = spymakeNodesAndRoutes;
+            var spyMakeNodesAndRoutes = function() {};
+            App.prototype.makeNodesAndRoutes = spyMakeNodesAndRoutes;
             spyOn(app, 'makeNodesAndRoutes');
             app.constructor.call(app);
             expect(app.makeNodesAndRoutes).not.toHaveBeenCalled();
@@ -62,13 +62,12 @@ describe('App', function(done) {
         });
     });
     describe('readInputFile(inputFile)', function(done) {
-        xit('Reads in inputFile and returns string line', function(done) {
-            expect(true).toBe(false, 'test not implemented');
+        xit('Reads in inputFile and returns data as string', function(done) {
             done();
         });
     });
-    describe('makeNodesAndRoutes(strLine)', function(done) {
-        xit('Extracts nodes and routes from strLine and returns array', function(done) {
+    describe('makeNodesAndRoutes(data)', function(done) {
+        xit('Extracts nodes and routes from data and returns array', function(done) {
             expect(true).toBe(false, 'test not implemented');
             done();
         });
@@ -107,7 +106,7 @@ describe('App', function(done) {
             done();
         });
     });
-    describe('calcRouteCount(path)', function(done) {
+    describe('calcRouteCount(path, cb)', function(done) {
         xit('Calculates number of unique routes with distance relationship', function(done) {
             expect(true).toBe(false, 'test not implemented');
             done();

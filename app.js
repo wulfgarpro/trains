@@ -20,29 +20,26 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 var utils = require('./lib/utils.js'),
     Digraph = require('./lib/digraph');
 
-/*
+/**
  * App constructor
  */
 var App = function(inputFile) {
-    // Welcome
-    utils.printWelcome();
-
     if (inputFile) {
-        // Get line from input file
-        var strLine = this.readInputFile(inputFile);
+        // Get data from input file
+        var data = this.readInputFile(inputFile);
         // Create nodes and routes from line
-        var nodesAndRoutes = this.makeNodesAndRoutes(strLine);
-        // Construct and assign digraph
-        this.digraph = this.buildDigraph(nodesAndRoutes);
-    } else {
-        console.log('No input file specified.')
+        var nodesAndRoutes = this.makeNodesAndRoutes(data);
+        // Create digraph
+        var digraph = this.buildDigraph(nodesAndRoutes);
+        this.digraph = digraph;
     }
-};
+}
+
 
 /**
  * Our current digraph obj
@@ -50,22 +47,24 @@ var App = function(inputFile) {
 App.prototype.digraph = {};
 
 /**
- * Read input file and return string line
+ * Read input file and return data
  */
-App.prototype.readInputFile = function(inputFile) {};
+App.prototype.readInputFile = function(inputFile) {
+    var data = utils.readFile(inputFile);
+    return data;
+};
 
 /**
- * Create node and route objs from string line
+ * Create node and route objs from data
  *
  * Info:
  * -----
- * - Line format should be: AB5, BC4, CD8
+ * - Data format should be: AB5, BC4, CD8
  */
-App.prototype.makeNodesAndRoutes = function(strLine) {};
+App.prototype.makeNodesAndRoutes = function(data) {};
 
 /**
- * Build digraph from extracted nodes and
- * routes
+ * Build digraph from extracted nodes and routes
  */
 App.prototype.buildDigraph = function(nodesAndRoutes) {};
 
@@ -88,8 +87,8 @@ App.prototype.printNetworkMap = function() {};
 App.prototype.calcDistance = function(path) {};
 
 /**
- * Calcs number of possible routes through
- * path with stops relation
+ * Calcs number of possible routes through path
+ * with stops relation
  *
  * Info:
  * -----
@@ -108,8 +107,8 @@ App.prototype.calcNumberOfPossibleTrips = function(path, stops) {};
 App.prototype.calcShortestRoute = function(path) {};
 
 /**
- * Calc number of unique routes with
- * distance relation
+ * Calc number of unique routes with distance
+ * relation
  *
  * Info:
  * -----
