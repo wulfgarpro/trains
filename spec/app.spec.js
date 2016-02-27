@@ -1,60 +1,49 @@
+var App = require('./../app');
+
 describe('App', function(done) {
-    var App, app,
-        testInputFile = __dirname + '/test_input.txt';
+    var app,
+        testInputFile = __dirname + '/test_input.txt',
+        testInputMultilineFile = __dirname + '/test_input_multiline.txt';
 
     beforeEach(function() {
-        App = require('./../app');
         app = new App(testInputFile);
     });
     afterEach(function() {
-        App = null;
         app = null;
     });
 
     describe('App(inputFile)', function() {
         it('Calls to read in input file', function(done) {
-            var spyReadInputFile = function() {};
-            App.prototype.readInputFile = spyReadInputFile;
             spyOn(app, 'readInputFile');
             app.constructor.call(app, testInputFile);
             expect(app.readInputFile).toHaveBeenCalled();
             done();
         });
-        it('Doesn\'t call to read in input file (none specified)', function(done) {
-            var spyReadInputFile = function() {};
-            App.prototype.readInputFile = spyReadInputFile;
+        it('Doesn\'t call to read in input file if no input file specified', function(done) {
             spyOn(app, 'readInputFile');
             app.constructor.call(app);
             expect(app.readInputFile).not.toHaveBeenCalled();
             done();
         });
         it('Calls to make nodes and routes', function(done) {
-            var spyMakeNodesAndRoutes = function() {};
-            App.prototype.makeNodesAndRoutes = spyMakeNodesAndRoutes;
             spyOn(app, 'makeNodesAndRoutes');
             app.constructor.call(app, testInputFile);
             expect(app.makeNodesAndRoutes).toHaveBeenCalled();
             done();
         });
-        it('Doesn\'t call to make nodes and routes', function(done) {
-            var spyMakeNodesAndRoutes = function() {};
-            App.prototype.makeNodesAndRoutes = spyMakeNodesAndRoutes;
+        it('Doesn\'t call to make nodes and routes if no input file specified', function(done) {
             spyOn(app, 'makeNodesAndRoutes');
             app.constructor.call(app);
             expect(app.makeNodesAndRoutes).not.toHaveBeenCalled();
             done();
         });
         it('Calls to build digraph', function(done) {
-            var spyBuildDigraph = function() {};
-            App.prototype.buildDigraph = spyBuildDigraph;
             spyOn(app, 'buildDigraph');
             app.constructor.call(app, testInputFile);
             expect(app.buildDigraph).toHaveBeenCalled();
             done();
         });
-        it('Doesn\'t call to build digraph', function(done) {
-            var spyBuildDigraph = function() {};
-            App.prototype.buildDigraph = spyBuildDigraph;
+        it('Doesn\'t call to build digraph if no input file specified', function(done) {
             spyOn(app, 'buildDigraph');
             app.constructor.call(app);
             expect(app.buildDigraph).not.toHaveBeenCalled();
@@ -62,12 +51,17 @@ describe('App', function(done) {
         });
     });
     describe('readInputFile(inputFile)', function(done) {
-        xit('Reads in inputFile and returns data as string', function(done) {
+        it('Reads in inputFile and returns data as string', function(done) {
+            expect(true).toBe(false, 'test not implemented');
             done();
         });
     });
     describe('makeNodesAndRoutes(data)', function(done) {
         xit('Extracts nodes and routes from data and returns array', function(done) {
+            expect(true).toBe(false, 'test not implemented');
+            done();
+        });
+        xit('Ignores non-comma seperated input data', function(done) {
             expect(true).toBe(false, 'test not implemented');
             done();
         });
