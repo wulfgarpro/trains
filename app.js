@@ -1,61 +1,121 @@
-/*
-    The MIT License (MIT)
-
-    Copyright (c) 2016 James Fraser
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
+/**
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016 James Fraser
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
 */
 
-/*
-*/
-var Digraph = require('./lib/digraph');
+var utils = require('./lib/utils.js'),
+    Digraph = require('./lib/digraph');
 
 /*
-*/
-var App = function() {
-    console.log('--------------------')
-    console.log('"Welcome to Trains!"');
-    console.log('--------------------')
+ * App constructor
+ */
+var App = function(inputFile) {
+    // Welcome
+    utils.printWelcome();
+
+    if (inputFile) {
+        // Get line from input file
+        var strLine = this.readInputFile(inputFile);
+        // Create nodes and routes from line
+        var nodesAndRoutes = this.makeNodesAndRoutes(strLine);
+        // Construct and assign digraph
+        this.digraph = this.buildDigraph(nodesAndRoutes);
+    } else {
+        console.log('No input file specified.')
+    }
 };
 
-/*
-*/
-App.prototype.calcDistance = function(path) {
-    return '';
-};
+/**
+ * Our current digraph obj
+ */
+App.prototype.digraph = {};
 
-/*
-*/
-App.prototype.calcNumberOfPossibleTrips = function(path, stops) {
-    return '';
-};
+/**
+ * Read input file and return string line
+ */
+App.prototype.readInputFile = function(inputFile) {};
 
-/*
-*/
-App.prototype.calcShortestRoute = function(path) {
-    return '';
-};
+/**
+ * Create node and route objs from string line
+ *
+ * Info:
+ * -----
+ * - Line format should be: AB5, BC4, CD8
+ */
+App.prototype.makeNodesAndRoutes = function(strLine) {};
 
-/*
-*/
-App.prototype.calcRouteCount = function(path, distance) {
-    return '';
-};
+/**
+ * Build digraph from extracted nodes and
+ * routes
+ */
+App.prototype.buildDigraph = function(nodesAndRoutes) {};
+
+/**
+ * Pretty print network map
+ *
+ * Info:
+ * -----
+ * - Print format is: A->B:5
+ */
+App.prototype.printNetworkMap = function() {};
+
+/**
+ * Calcs distrance of defined path
+ *
+ * Info:
+ * -----
+ * - Path format is: A-C
+ */
+App.prototype.calcDistance = function(path) {};
+
+/**
+ * Calcs number of possible routes through
+ * path with stops relation
+ *
+ * Info:
+ * -----
+ * - Path format is: A-C
+ * - Stops format is: <5, >5, <=5, >=5, 5
+ */
+App.prototype.calcNumberOfPossibleTrips = function(path, stops) {};
+
+/**
+ * Calcs shortest possible route via path
+ *
+ * Info:
+ * -----
+ * - Path format is: A-C
+ */
+App.prototype.calcShortestRoute = function(path) {};
+
+/**
+ * Calc number of unique routes with
+ * distance relation
+ *
+ * Info:
+ * -----
+ * - Path format is: A-C
+ * - Distance format is: <5, >5, <=5, >=5, 5
+ */
+App.prototype.calcRouteCount = function(path, distance) {};
 
 module.exports = App;
