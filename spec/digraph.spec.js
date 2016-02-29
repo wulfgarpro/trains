@@ -16,15 +16,15 @@ describe('Digraph', function() {
             expect(digraph.nodes['C']).not.toBe(undefined);
             expect(digraph.nodes['D']).not.toBe(undefined);
             expect(digraph.nodes['E']).not.toBe(undefined);
-            expect(digraph.nodes['A'].routes['B'].weight).toBe('5');
-            expect(digraph.nodes['B'].routes['C'].weight).toBe('4');
-            expect(digraph.nodes['C'].routes['D'].weight).toBe('8');
-            expect(digraph.nodes['D'].routes['C'].weight).toBe('8');
-            expect(digraph.nodes['D'].routes['E'].weight).toBe('6');
-            expect(digraph.nodes['A'].routes['D'].weight).toBe('5');
-            expect(digraph.nodes['C'].routes['E'].weight).toBe('2');
-            expect(digraph.nodes['E'].routes['B'].weight).toBe('3');
-            expect(digraph.nodes['A'].routes['E'].weight).toBe('7');
+            expect(digraph.nodes['A'].routes['B'].weight).toBe(5);
+            expect(digraph.nodes['B'].routes['C'].weight).toBe(4);
+            expect(digraph.nodes['C'].routes['D'].weight).toBe(8);
+            expect(digraph.nodes['D'].routes['C'].weight).toBe(8);
+            expect(digraph.nodes['D'].routes['E'].weight).toBe(6);
+            expect(digraph.nodes['A'].routes['D'].weight).toBe(5);
+            expect(digraph.nodes['C'].routes['E'].weight).toBe(2);
+            expect(digraph.nodes['E'].routes['B'].weight).toBe(3);
+            expect(digraph.nodes['A'].routes['E'].weight).toBe(7);
             done();
         });
     });
@@ -32,23 +32,23 @@ describe('Digraph', function() {
         it('Extracts nodes and routes from data and returns array of Nodes with their respective Routes', function(done) {
             var nodes = Digraph.makeNodes(testDataA);
             expect(Object.keys(nodes).length).toBe(5);
-            expect(nodes['A'].routes['B'].weight).toBe('5');
-            expect(nodes['B'].routes['C'].weight).toBe('4');
-            expect(nodes['C'].routes['D'].weight).toBe('8');
-            expect(nodes['D'].routes['C'].weight).toBe('8');
-            expect(nodes['D'].routes['E'].weight).toBe('6');
-            expect(nodes['A'].routes['D'].weight).toBe('5');
-            expect(nodes['C'].routes['E'].weight).toBe('2');
-            expect(nodes['E'].routes['B'].weight).toBe('3');
-            expect(nodes['A'].routes['E'].weight).toBe('7');
+            expect(nodes['A'].routes['B'].weight).toBe(5);
+            expect(nodes['B'].routes['C'].weight).toBe(4);
+            expect(nodes['C'].routes['D'].weight).toBe(8);
+            expect(nodes['D'].routes['C'].weight).toBe(8);
+            expect(nodes['D'].routes['E'].weight).toBe(6);
+            expect(nodes['A'].routes['D'].weight).toBe(5);
+            expect(nodes['C'].routes['E'].weight).toBe(2);
+            expect(nodes['E'].routes['B'].weight).toBe(3);
+            expect(nodes['A'].routes['E'].weight).toBe(7);
             done();
         });
         it('Extracts nodes and routes from data and returns array of Nodes with their respective Routes, ignoring bogus data', function(done) {
             var nodes = Digraph.makeNodes(testDataBogus);
             expect(Object.keys(nodes).length).toBe(3);
-            expect(nodes['A'].routes['B'].weight).toBe('5');
-            expect(nodes['E'].routes['B'].weight).toBe('3');
-            expect(nodes['A'].routes['E'].weight).toBe('7');
+            expect(nodes['A'].routes['B'].weight).toBe(5);
+            expect(nodes['E'].routes['B'].weight).toBe(3);
+            expect(nodes['A'].routes['E'].weight).toBe(7);
             done();
         });
     });
@@ -83,8 +83,36 @@ describe('Digraph', function() {
         });
     });
     describe('calcDistance(path)', function(done) {
-        xit('Calculates distance of a defined path', function(done) {
-            expect(true).toBe(false, 'test not implemented');
+        it('Calculates distance of a defined path', function(done) {
+            var digraph = new Digraph(testDataA);
+            expect(digraph.nodes['A'].routes['B'].weight).toBe(5);
+            expect(digraph.nodes['B'].routes['C'].weight).toBe(4);
+            expect(digraph.nodes['C'].routes['D'].weight).toBe(8);
+            expect(digraph.nodes['D'].routes['C'].weight).toBe(8);
+            expect(digraph.nodes['D'].routes['E'].weight).toBe(6);
+            expect(digraph.nodes['A'].routes['D'].weight).toBe(5);
+            expect(digraph.nodes['C'].routes['E'].weight).toBe(2);
+            expect(digraph.nodes['E'].routes['B'].weight).toBe(3);
+            expect(digraph.nodes['A'].routes['E'].weight).toBe(7);
+            expect(digraph.calcDistance('A-B-C')).toBe(5 + 4);
+            expect(digraph.calcDistance('A-D')).toBe(5);
+            expect(digraph.calcDistance('A-E-B-C-D')).toBe(7 + 3 + 4 + 8);
+            done();
+        });
+        it('Throws Error if defined path doesn\'t exist', function(done) {
+            var digraph = new Digraph(testDataA);
+            expect(digraph.nodes['A'].routes['B'].weight).toBe(5);
+            expect(digraph.nodes['B'].routes['C'].weight).toBe(4);
+            expect(digraph.nodes['C'].routes['D'].weight).toBe(8);
+            expect(digraph.nodes['D'].routes['C'].weight).toBe(8);
+            expect(digraph.nodes['D'].routes['E'].weight).toBe(6);
+            expect(digraph.nodes['A'].routes['D'].weight).toBe(5);
+            expect(digraph.nodes['C'].routes['E'].weight).toBe(2);
+            expect(digraph.nodes['E'].routes['B'].weight).toBe(3);
+            expect(digraph.nodes['A'].routes['E'].weight).toBe(7);
+            expect(function() {
+                digraph.calcDistance('A-E-D');
+            }).toThrow('NO SUCH ROUTE.');
             done();
         });
     });

@@ -69,15 +69,15 @@ describe('App', function(done) {
             expect(digraph.nodes['C']).not.toBe(undefined);
             expect(digraph.nodes['D']).not.toBe(undefined);
             expect(digraph.nodes['E']).not.toBe(undefined);
-            expect(digraph.nodes['A'].routes['B'].weight).toBe('5');
-            expect(digraph.nodes['B'].routes['C'].weight).toBe('4');
-            expect(digraph.nodes['C'].routes['D'].weight).toBe('8');
-            expect(digraph.nodes['D'].routes['C'].weight).toBe('8');
-            expect(digraph.nodes['D'].routes['E'].weight).toBe('6');
-            expect(digraph.nodes['A'].routes['D'].weight).toBe('5');
-            expect(digraph.nodes['C'].routes['E'].weight).toBe('2');
-            expect(digraph.nodes['E'].routes['B'].weight).toBe('3');
-            expect(digraph.nodes['A'].routes['E'].weight).toBe('7');
+            expect(digraph.nodes['A'].routes['B'].weight).toBe(5);
+            expect(digraph.nodes['B'].routes['C'].weight).toBe(4);
+            expect(digraph.nodes['C'].routes['D'].weight).toBe(8);
+            expect(digraph.nodes['D'].routes['C'].weight).toBe(8);
+            expect(digraph.nodes['D'].routes['E'].weight).toBe(6);
+            expect(digraph.nodes['A'].routes['D'].weight).toBe(5);
+            expect(digraph.nodes['C'].routes['E'].weight).toBe(2);
+            expect(digraph.nodes['E'].routes['B'].weight).toBe(3);
+            expect(digraph.nodes['A'].routes['E'].weight).toBe(7);
             done();
         });
     });
@@ -88,8 +88,25 @@ describe('App', function(done) {
         });
     });
     describe('calcDistance(path)', function(done) {
-        xit('Calculates distance of a defined path', function(done) {
-            expect(true).toBe(false, 'test not implemented');
+        it('Calculates distance of a defined path', function(done) {
+            var digraph = App.buildDigraph(testDataA);
+            expect(digraph.nodes['A']).not.toBe(undefined);
+            expect(digraph.nodes['B']).not.toBe(undefined);
+            expect(digraph.nodes['C']).not.toBe(undefined);
+            expect(digraph.nodes['D']).not.toBe(undefined);
+            expect(digraph.nodes['E']).not.toBe(undefined);
+            expect(digraph.nodes['A'].routes['B'].weight).toBe(5);
+            expect(digraph.nodes['B'].routes['C'].weight).toBe(4);
+            expect(digraph.nodes['C'].routes['D'].weight).toBe(8);
+            expect(digraph.nodes['D'].routes['C'].weight).toBe(8);
+            expect(digraph.nodes['D'].routes['E'].weight).toBe(6);
+            expect(digraph.nodes['A'].routes['D'].weight).toBe(5);
+            expect(digraph.nodes['C'].routes['E'].weight).toBe(2);
+            expect(digraph.nodes['E'].routes['B'].weight).toBe(3);
+            expect(digraph.nodes['A'].routes['E'].weight).toBe(7);
+            expect(app.calcDistance('A-B-C')).toBe(5 + 4);
+            expect(app.calcDistance('A-D')).toBe(5);
+            expect(app.calcDistance('A-E-B-C-D')).toBe(7 + 3 + 4 + 8);
             done();
         });
     });
