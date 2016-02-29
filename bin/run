@@ -24,8 +24,8 @@
  * SOFTWARE.
  */
 
-var App = require('./../app'),
-    utils = require('./../lib/utils');
+var utils = require('./../lib/utils'),
+    App = require('./../app');
 
 // Get input file from args
 var args = process.argv.slice(2); // strip elements 0,1
@@ -37,19 +37,6 @@ if (/^help$/.test(inputFile)) {
     process.exit();
 }
 
-/**
- * Tests outlined in ThoughtWorks problem spec
- * email
- */
+utils.printWelcome();
 var app = new App(inputFile);
-
-/*console.log(app.calcDistance('A-B-C'));
-console.log(app.calcDistance('A-D'));
-console.log(app.calcDistance('A-D-C'));
-console.log(app.calcDistance('A-E-B-C-D'));
-console.log(app.calcDistance('A-E-D'));
-console.log(app.calcNumberOfPossibleTrips('C-C', '<=3'));
-console.log(app.calcNumberOfPossibleTrips('A-C', '=4'));
-console.log(app.calcShortestRoute('A-C'));
-console.log(app.calcShortestRoute('B-B'))
-console.log(app.calcRouteCount('C-C', '<30'));*/
+//app.thoughtWorks(); // ThoughtWorks tests
