@@ -38,7 +38,10 @@ At it's core, Trains is a Directed Graph (Digraph) with an Adjacency List implem
 Future work:
 ------------
 
-Extend synchronous functions with asynchronous varints and expose via REST API.
+- Extend synchronous functions with asynchronous varints and expose via REST API.
+- Run code through lint
+- Better error handling
+- More edge case  tests
 
 How to run:
 -----------
