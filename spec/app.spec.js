@@ -1,9 +1,12 @@
-var App = require('./../app');
+var Digraph = require('./../lib/digraph'),
+    App = require('./../app'),
+    util = require('util');
 
 describe('App', function(done) {
     var app,
-        testInputFile = __dirname + '/test_input.txt',
-        testInputMultilineFile = __dirname + '/test_input_multiline.txt',
+        testInputFile = __dirname + '/files/test_input.txt',
+        testInputMultilineFile = __dirname + '/files/test_input_multiline.txt',
+        testBogusInputFile = __dirname + '/bogus.txt',
         testDataA = 'AB5,BC4,CD8,DC8,DE6,AD5,CE2,EB3,AE7',
         testDataB = 'AB5,BC4,CD8,DC8,DE6,AD5,CE2,EB3,AE7,AB5,BC4,CD8,DC8,DE6,AD5,CE2,EB3,AE7';
 
@@ -15,68 +18,66 @@ describe('App', function(done) {
     });
 
     describe('App(inputFile)', function() {
-        it('Calls to read in input file', function(done) {
-            spyOn(app, 'readInputFile');
+        it('Calls to read in inputFile', function(done) {
+            spyOn(App, 'readInputFile');
             app.constructor.call(app, testInputFile);
-            expect(app.readInputFile).toHaveBeenCalled();
+            expect(App.readInputFile).toHaveBeenCalled();
             done();
         });
-        it('Doesn\'t call to read in input file if no input file specified', function(done) {
-            spyOn(app, 'readInputFile');
+        it('Doesn\'t call to read in input file if no inputFile specified', function(done) {
+            spyOn(App, 'readInputFile');
             app.constructor.call(app);
-            expect(app.readInputFile).not.toHaveBeenCalled();
-            done();
-        });
-        it('Calls to make nodes and routes', function(done) {
-            spyOn(app, 'makeNodesAndRoutes');
-            app.constructor.call(app, testInputFile);
-            expect(app.makeNodesAndRoutes).toHaveBeenCalled();
-            done();
-        });
-        it('Doesn\'t call to make nodes and routes if no input file specified', function(done) {
-            spyOn(app, 'makeNodesAndRoutes');
-            app.constructor.call(app);
-            expect(app.makeNodesAndRoutes).not.toHaveBeenCalled();
+            expect(App.readInputFile).not.toHaveBeenCalled();
             done();
         });
         it('Calls to build digraph', function(done) {
-            spyOn(app, 'buildDigraph');
+            spyOn(App, 'buildDigraph');
             app.constructor.call(app, testInputFile);
-            expect(app.buildDigraph).toHaveBeenCalled();
+            expect(App.buildDigraph).toHaveBeenCalled();
             done();
         });
-        it('Doesn\'t call to build digraph if no input file specified', function(done) {
-            spyOn(app, 'buildDigraph');
+        it('Doesn\'t call to build digraph if no inputFile specified', function(done) {
+            spyOn(App, 'buildDigraph');
             app.constructor.call(app);
-            expect(app.buildDigraph).not.toHaveBeenCalled();
+            expect(App.buildDigraph).not.toHaveBeenCalled();
             done();
         });
     });
     describe('readInputFile(inputFile)', function(done) {
         it('Reads in inputFile and returns data as string', function(done) {
-            var data = app.readInputFile(testInputFile);
+            var data = App.readInputFile(testInputFile);
             expect(data).toBe(testDataA);
             done();
         });
         it('Reads in inputFile with multiple lines and returns data as one string', function(done) {
-            var data = app.readInputFile(testInputMultilineFile);
+            var data = App.readInputFile(testInputMultilineFile);
             expect(data).toBe(testDataB);
             done();
         });
-    });
-    describe('makeNodesAndRoutes(data)', function(done) {
-        xit('Extracts nodes and routes from data and returns array', function(done) {
-            expect(true).toBe(false, 'test not implemented');
-            done();
-        });
-        xit('Ignores non-comma seperated input data', function(done) {
-            expect(true).toBe(false, 'test not implemented');
+        it('Throws Error if file doesn\'t exist', function(done) {
+            expect(function() {
+                App.readInputFile(testBogusInputFile);
+            }).toThrow('No such file.');
             done();
         });
     });
-    describe('buildDigraph(nodesAndRoutes)', function(done) {
-        xit('Builds valid digraph from nodesAndRoutes array', function(done) {
-            expect(true).toBe(false, 'test not implemented');
+    describe('buildDigraph(data)', function(done) {
+        it('Builds valid digraph from data string', function(done) {
+            var digraph = App.buildDigraph(testDataA);
+            expect(digraph.nodes['A']).not.toBe(undefined);
+            expect(digraph.nodes['B']).not.toBe(undefined);
+            expect(digraph.nodes['C']).not.toBe(undefined);
+            expect(digraph.nodes['D']).not.toBe(undefined);
+            expect(digraph.nodes['E']).not.toBe(undefined);
+            expect(digraph.nodes['A'].routes['B'].weight).toBe('5');
+            expect(digraph.nodes['B'].routes['C'].weight).toBe('4');
+            expect(digraph.nodes['C'].routes['D'].weight).toBe('8');
+            expect(digraph.nodes['D'].routes['C'].weight).toBe('8');
+            expect(digraph.nodes['D'].routes['E'].weight).toBe('6');
+            expect(digraph.nodes['A'].routes['D'].weight).toBe('5');
+            expect(digraph.nodes['C'].routes['E'].weight).toBe('2');
+            expect(digraph.nodes['E'].routes['B'].weight).toBe('3');
+            expect(digraph.nodes['A'].routes['E'].weight).toBe('7');
             done();
         });
     });
@@ -110,6 +111,12 @@ describe('App', function(done) {
     });
     describe('calcRouteCount(path, cb)', function(done) {
         xit('Calculates number of unique routes with distance relationship', function(done) {
+            expect(true).toBe(false, 'test not implemented');
+            done();
+        });
+    });
+    describe('thoughtWorks()', function(done) {
+        xit('Runs through all requisite tests outlined in ThoughtWorks email', function(done) {
             expect(true).toBe(false, 'test not implemented');
             done();
         });

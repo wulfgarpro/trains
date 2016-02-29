@@ -22,99 +22,119 @@
  * SOFTWARE.
  */
 
-var utils = require('./lib/utils.js'),
-    Digraph = require('./lib/digraph');
+var Digraph = require('./lib/digraph'),
+    utils = require('./lib/utils'),
+    Route = require('./lib/route'),
+    Node = require('./lib/node');
 
 /**
- * App constructor
+ * [App description]
+ * @param {[type]} inputFile [description]
  */
 var App = function(inputFile) {
+    this.digraph = {};
+
     if (inputFile) {
         // Get data from input file
-        var data = this.readInputFile(inputFile);
-        // Create nodes and routes from line
-        var nodesAndRoutes = this.makeNodesAndRoutes(data);
+        var data = App.readInputFile(inputFile);
         // Create digraph
-        var digraph = this.buildDigraph(nodesAndRoutes);
-        this.digraph = digraph;
+        this.digraph = App.buildDigraph(data);
     }
 };
 
-
 /**
- * Our current digraph obj
+ * [thoughtWorks description]
+ * @return {[type]} [description]
  */
-App.prototype.digraph = {};
-
-/**
- * Read input file and return data
- */
-App.prototype.readInputFile = function(inputFile) {
-    var data = utils.readFile(inputFile);
-    return data;
+App.prototype.thoughtWorks = function() {
+    if (this.digraph) {
+        // These tests were outlined in ThoughtWorks email
+        console.log(App.calcDistance('A-B-C', this.digraph));
+        console.log(App.calcDistance('A-D', this.digraph));
+        console.log(App.calcDistance('A-D-C', this.digraph));
+        console.log(App.calcDistance('A-E-B-C-D', this.digraph));
+        console.log(App.calcDistance('A-E-D', this.digraph));
+        console.log(App.calcNumberOfPossibleTrips('C-C', '<=3'), this.digraph);
+        console.log(App.calcNumberOfPossibleTrips('A-C', '=4'), this.digraph);
+        console.log(App.calcShortestRoute('A-C'), this.digraph);
+        console.log(App.calcShortestRoute('B-B'), this.digraph);
+        console.log(App.calcRouteCount('C-C', '<30'), this.digraph);
+    }
 };
 
 /**
- * Create node and route objs from data
- *
- * Info:
- * -----
- * - Data format should be: AB5, BC4, CD8
+ * [readInputFile description]
+ * @param  {[type]} inputFile [description]
+ * @return {[type]}           [description]
  */
-App.prototype.makeNodesAndRoutes = function(data) {};
+App.readInputFile = function(inputFile) {
+    if (inputFile) {
+        var data = utils.readFile(inputFile);
+        return data;
+    }
+};
 
 /**
- * Build digraph from extracted nodes and routes
+ * [buildDigraph description]
+ * @param  {[type]} data [description]
+ * @return {[type]}      [description]
  */
-App.prototype.buildDigraph = function(nodesAndRoutes) {};
+App.buildDigraph = function(data) {
+    if (data) {
+        var digraph = new Digraph(data);
+    }
+    return digraph;
+};
 
 /**
- * Pretty print network map
- *
- * Info:
- * -----
- * - Print format is: A->B:5
+ * [printNetworkMap description]
+ * @param  {[type]} digraph [description]
+ * @return {[type]}         [description]
  */
-App.prototype.printNetworkMap = function() {};
+App.printNetworkMap = function(digraph) {
+    Digraph.printNetworkMap(digraph);
+};
 
 /**
- * Calcs distrance of defined path
- *
- * Info:
- * -----
- * - Path format is: A-C
+ * [calcDistance description]
+ * @param  {[type]} path    [description]
+ * @param  {[type]} digraph [description]
+ * @return {[type]}         [description]
  */
-App.prototype.calcDistance = function(path) {};
+App.calcDistance = function(path, digraph) {
+    Digraph.calcDistance(path, digraph);
+};
 
 /**
- * Calcs number of possible routes through path
- * with stops relation
- *
- * Info:
- * -----
- * - Path format is: A-C
- * - Stops format is: <5, >5, <=5, >=5, 5
+ * [calcNumberOfPossibleTrips description]
+ * @param  {[type]} path    [description]
+ * @param  {[type]} stops   [description]
+ * @param  {[type]} digraph [description]
+ * @return {[type]}         [description]
  */
-App.prototype.calcNumberOfPossibleTrips = function(path, stops) {};
+App.calcNumberOfPossibleTrips = function(path, stops, digraph) {
+    Digraph.calcNumberOfPossibleTrips(path, stops, digraph);
+};
 
 /**
- * Calcs shortest possible route via path
- *
- * Info:
- * -----
- * - Path format is: A-C
+ * [calcShortestRoute description]
+ * @param  {[type]} path    [description]
+ * @param  {[type]} digraph [description]
+ * @return {[type]}         [description]
  */
-App.prototype.calcShortestRoute = function(path) {};
+App.calcShortestRoute = function(path, digraph) {
+    Digraph.calcShortestRoute(path, digraph);
+};
 
 /**
- * Calc number of unique routes with distance
- * relation
- *
- * Info:
- * -----
- * - Path format is: A-C
- * - Distance format is: <5, >5, <=5, >=5, 5
+ * [calcRouteCount description]
+ * @param  {[type]} path     [description]
+ * @param  {[type]} distance [description]
+ * @param  {[type]} digraph  [description]
+ * @return {[type]}          [description]
  */
-App.prototype.calcRouteCount = function(path, distance) {};
+App.calcRouteCount = function(path, distance, digraph) {
+    Digraph.calcRouteCount(path, distance, digraph);
+};
 
 module.exports = App;
