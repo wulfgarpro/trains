@@ -18,8 +18,8 @@ describe('Node', function() {
             var destination = new Node('B');
             var route = new Route(destination, 5);
             node.set(route);
-            expect(node.routes['B']).not.toBe(undefined);
-            expect(node.routes['B'].weight).toBe(5);
+            expect(node.routes.get('B')).not.toBe(undefined);
+            expect(node.routes.get('B').weight).toBe(5);
             done();
         });
         it('Overrides duplicate Route to this Node', function(done) {
@@ -27,14 +27,14 @@ describe('Node', function() {
             var destination = new Node('B');
             var route = new Route(destination, 5);
             node.set(route);
-            expect(node.routes['B']).not.toBe(undefined);
-            expect(node.routes['B'].weight).toBe(5);
+            expect(node.routes.get('B')).not.toBe(undefined);
+            expect(node.routes.get('B').weight).toBe(5);
             var node = new Node('A');
             var destination = new Node('B');
             var route = new Route(destination, 9);
             node.set(route);
-            expect(node.routes['B']).not.toBe(undefined);
-            expect(node.routes['B'].weight).toBe(9);
+            expect(node.routes.get('B')).not.toBe(undefined);
+            expect(node.routes.get('B').weight).toBe(9);
             done();
         });
     });
@@ -44,8 +44,8 @@ describe('Node', function() {
             var destination = new Node('B');
             var route = new Route(destination, 9);
             node.set(route);
-            expect(node.routes['B']).not.toBe(undefined);
-            expect(node.routes['B'].weight).toBe(9);
+            expect(node.routes.get('B')).not.toBe(undefined);
+            expect(node.routes.get('B').weight).toBe(9);
             var found = node.get(destination);
             expect(found).not.toBe(undefined);
             expect(found.destination.name).toBe('B');
@@ -59,18 +59,18 @@ describe('Node', function() {
             var destination = new Node('B');
             var route = new Route(destination, 9);
             node.set(route);
-            expect(node.routes['B']).not.toBe(undefined);
-            expect(node.routes['B'].weight).toBe(9);
+            expect(node.routes.get('B')).not.toBe(undefined);
+            expect(node.routes.get('B').weight).toBe(9);
             node.del(destination);
-            expect(node.routes['B']).toBe(undefined);
+            expect(node.routes.get('B')).toBe(undefined);
             done();
         });
         it('Fails silently if no such destination Node route from this Node exists', function(done) {
             var node = new Node('A');
             var destination = new Node('B');
-            expect(node.routes['B']).toBe(undefined);
+            expect(node.routes.get('B')).toBe(undefined);
             node.del(destination);
-            expect(node.routes['B']).toBe(undefined);
+            expect(node.routes.get('B')).toBe(undefined);
             done();
         });
     });
