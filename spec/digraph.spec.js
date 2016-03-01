@@ -52,30 +52,6 @@ describe('Digraph', function() {
             done();
         });
     });
-    describe('set(destination, weight)', function() {
-        xit('Creates a Route between this Node and destination Node with said weight', function(done) {
-            expect(true).toBe(false, 'test not implemented');
-            done();
-        });
-    });
-    describe('get(destination)', function() {
-        xit('Returns Route between this Node and destination Node', function(done) {
-            expect(true).toBe(false, 'test not implemented');
-            done();
-        });
-    });
-    describe('getAllNodes()', function() {
-        xit('Returns all Node objs from this Digraph', function(done) {
-            expect(true).toBe(false, 'test not implemented');
-            done();
-        });
-    });
-    describe('getAllRoutes()', function() {
-        xit('Returns all Route objs from this Digraph', function(done) {
-            expect(true).toBe(false, 'test not implemented');
-            done();
-        });
-    });
     describe('printNetworkMap()', function(done) {
         xit('Prints a valid network map from current digraph', function(done) {
             expect(true).toBe(false, 'test not implemented');
@@ -116,9 +92,22 @@ describe('Digraph', function() {
             done();
         });
     });
-    describe('calcNumberOfPossibleTrips(path, stops)', function(done) {
-        xit('Calculates number of possible trips with max stops', function(done) {
-            expect(true).toBe(false, 'test not implemented');
+    describe('calcNumberOfPossiblePaths(path, stops)', function(done) {
+        it('Calculates number of possible trips with max stops', function(done) {
+            var digraph = new Digraph(testDataA);
+            expect(digraph.nodes.get('A').routes.get('B').weight).toBe(5);
+            expect(digraph.nodes.get('B').routes.get('C').weight).toBe(4);
+            expect(digraph.nodes.get('C').routes.get('D').weight).toBe(8);
+            expect(digraph.nodes.get('D').routes.get('C').weight).toBe(8);
+            expect(digraph.nodes.get('D').routes.get('E').weight).toBe(6);
+            expect(digraph.nodes.get('A').routes.get('D').weight).toBe(5);
+            expect(digraph.nodes.get('C').routes.get('E').weight).toBe(2);
+            expect(digraph.nodes.get('E').routes.get('B').weight).toBe(3);
+            expect(digraph.nodes.get('A').routes.get('E').weight).toBe(7);
+            expect(function() {
+                digraph.calcDistance('A-E-D');
+            }).toThrow('NO SUCH ROUTE.');
+            expect(digraph.calcNumberOfPossiblePaths('C', 'C', 3).size).toBe(2);
             done();
         });
         xit('Calculates number of possible trips with exact stops', function(done) {
