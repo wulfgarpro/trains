@@ -47,18 +47,20 @@ var App = function(inputFile) {
  * @return {[type]} [description]
  */
 App.prototype.thoughtWorks = function() {
-    if (this.digraph.nodes) {
-        // These tests were outlined in ThoughtWorks email
-        console.log(this.calcDistance('A-B-C'));
-        console.log(this.calcDistance('A-D'));
-        console.log(this.calcDistance('A-D-C'));
-        console.log(this.calcDistance('A-E-B-C-D'));
-        console.log(this.calcDistance('A-E-D'));
-        console.log(this.calcNumberOfPossibleTrips('C-C', '<=', '3'));
-        console.log(this.calcNumberOfPossibleTrips('A-C', '==', '4'));
-        //console.log(this.digraph.calcShortestRoute('A-C'));
-        //console.log(this.digraph.calcShortestRoute('B-B'));
-        //console.log(this.digraph.calcRouteCount('C-C', '<30'));
+    if (this.digraph) {
+        if (this.digraph.nodes) {
+            // These tests were outlined in ThoughtWorks email
+            console.log(this.calcDistance('A-B-C'));
+            console.log(this.calcDistance('A-D'));
+            console.log(this.calcDistance('A-D-C'));
+            console.log(this.calcDistance('A-E-B-C-D'));
+            console.log(this.calcDistance('A-E-D'));
+            console.log(this.calcNumberOfPossibleTrips('C-C', '<=', '3'));
+            console.log(this.calcNumberOfPossibleTrips('A-C', '==', '4'));
+            //console.log(this.digraph.calcShortestRoute('A-C'));
+            //console.log(this.digraph.calcShortestRoute('B-B'));
+            //console.log(this.digraph.calcRouteCount('C-C', '<30'));
+        }
     }
     return ''; // return nothing
 };
@@ -148,9 +150,13 @@ App.prototype.calcRouteCount = function(path, distance) {};
  * @return {[type]}           [description]
  */
 App.readInputFile = function(inputFile) {
-    if (inputFile) {
-        var data = utils.readFile(inputFile);
-        return data;
+    try {
+        if (inputFile) {
+            var data = utils.readFile(inputFile);
+            return data;
+        }
+    } catch (err) {
+        console.log(err);
     }
 };
 

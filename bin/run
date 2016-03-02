@@ -31,12 +31,19 @@ var utils = require('./../lib/utils'),
 var args = process.argv.slice(2); // strip elements 0,1
 var inputFile = args[0];
 
-// Catch help switch
-if (/^help$/.test(inputFile)) {
+function printHelp() {
     utils.printHelp();
     process.exit();
 }
 
+// Catch help switch
+if (/^--help$/.test(inputFile)) {
+    printHelp();
+}
+
 utils.printWelcome();
+
+if (!inputFile) printHelp();
+
 var app = new App(inputFile);
 app.thoughtWorks(); // ThoughtWorks tests
