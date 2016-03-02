@@ -92,8 +92,8 @@ describe('Digraph', function() {
             done();
         });
     });
-    describe('calcNumberOfPossiblePaths(path, stops)', function(done) {
-        it('Calculates number of possible trips with max stops', function(done) {
+    describe('getAllPaths(path, stops)', function(done) {
+        it('Traverses digraph and returns all paths matching path with maximum stops', function(done) {
             var digraph = new Digraph(testDataA);
             expect(digraph.nodes.get('A').routes.get('B').weight).toBe(5);
             expect(digraph.nodes.get('B').routes.get('C').weight).toBe(4);
@@ -107,23 +107,11 @@ describe('Digraph', function() {
             expect(function() {
                 digraph.calcDistance('A-E-D');
             }).toThrow('NO SUCH ROUTE.');
-            expect(digraph.calcNumberOfPossiblePaths('C', 'C', 3).size).toBe(2);
-            done();
-        });
-        xit('Calculates number of possible trips with exact stops', function(done) {
-            expect(true).toBe(false, 'test not implemented');
-            done();
-        });
-    });
-    describe('calcShortestRoute(path)', function(done) {
-        xit('Calculates shortest possible route', function(done) {
-            expect(true).toBe(false, 'test not implemented');
-            done();
-        });
-    });
-    describe('calcRouteCount(path, cb)', function(done) {
-        xit('Calculates number of unique routes with distance relationship', function(done) {
-            expect(true).toBe(false, 'test not implemented');
+            expect(digraph.getAllPaths('C', 'C', 3).size).toBe(2);
+            expect(digraph.getAllPaths('C', 'C', 3).get('CDC')).toBe(16);
+            expect(digraph.getAllPaths('C', 'C', 3).get('CEBC')).toBe(9);
+            expect(digraph.getAllPaths('A', 'B', 3).size).toBe(3);
+            expect(digraph.getAllPaths('A', 'E', 3).size).toBe(4);
             done();
         });
     });

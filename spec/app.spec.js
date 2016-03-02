@@ -89,34 +89,23 @@ describe('App', function(done) {
     });
     describe('calcDistance(path)', function(done) {
         it('Calculates distance of a defined path', function(done) {
-            var digraph = App.buildDigraph(testDataA);
-            expect(digraph.nodes.get('A')).not.toBe(undefined);
-            expect(digraph.nodes.get('B')).not.toBe(undefined);
-            expect(digraph.nodes.get('C')).not.toBe(undefined);
-            expect(digraph.nodes.get('D')).not.toBe(undefined);
-            expect(digraph.nodes.get('E')).not.toBe(undefined);
-            expect(digraph.nodes.get('A').routes.get('B').weight).toBe(5);
-            expect(digraph.nodes.get('B').routes.get('C').weight).toBe(4);
-            expect(digraph.nodes.get('C').routes.get('D').weight).toBe(8);
-            expect(digraph.nodes.get('D').routes.get('C').weight).toBe(8);
-            expect(digraph.nodes.get('D').routes.get('E').weight).toBe(6);
-            expect(digraph.nodes.get('A').routes.get('D').weight).toBe(5);
-            expect(digraph.nodes.get('C').routes.get('E').weight).toBe(2);
-            expect(digraph.nodes.get('E').routes.get('B').weight).toBe(3);
-            expect(digraph.nodes.get('A').routes.get('E').weight).toBe(7);
             expect(app.calcDistance('A-B-C')).toBe(5 + 4);
             expect(app.calcDistance('A-D')).toBe(5);
             expect(app.calcDistance('A-E-B-C-D')).toBe(7 + 3 + 4 + 8);
             done();
         });
     });
-    describe('calcNumberOfPossibleTrips(path, stops)', function(done) {
-        xit('Calculates number of possible trips with max stops', function(done) {
-            expect(true).toBe(false, 'test not implemented');
+    describe('calcNumberOfPossibleTrips(path, relation, stops)', function(done) {
+        it('Calculates number of possible trips with max stops', function(done) {
+            expect(app.calcNumberOfPossibleTrips('C-C', '<=', 3)).toBe(2);
+            expect(app.calcNumberOfPossibleTrips('A-B', '<=', 3)).toBe(3);
+            expect(app.calcNumberOfPossibleTrips('A-E', '<=', 3)).toBe(4);
             done();
         });
-        xit('Calculates number of possible trips with exact stops', function(done) {
-            expect(true).toBe(false, 'test not implemented');
+        it('Calculates number of possible trips with exact stops', function(done) {
+            expect(app.calcNumberOfPossibleTrips('C-C', '==', 3)).toBe(1);
+            expect(app.calcNumberOfPossibleTrips('A-B', '==', 3)).toBe(1);
+            expect(app.calcNumberOfPossibleTrips('A-C', '==', 4)).toBe(3);
             done();
         });
     });

@@ -39,4 +39,4 @@ if (/^help$/.test(inputFile)) {
 
 utils.printWelcome();
 var app = new App(inputFile);
-//app.thoughtWorks(); // ThoughtWorks tests
+app.thoughtWorks(); // ThoughtWorks tests

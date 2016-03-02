@@ -47,21 +47,21 @@ var App = function(inputFile) {
  * @return {[type]} [description]
  */
 App.prototype.thoughtWorks = function() {
-    if (this.digraph) {
+    if (this.digraph.nodes) {
         // These tests were outlined in ThoughtWorks email
-        console.log(this.digraph.calcDistance('A-B-C'));
-        console.log(this.digraph.calcDistance('A-D'));
-        console.log(this.digraph.calcDistance('A-D-C'));
-        console.log(this.digraph.calcDistance('A-E-B-C-D'));
-        console.log(this.digraph.calcDistance('A-E-D'));
-        console.log(this.digraph.calcNumberOfPossibleTrips('C-C', '<=3'));
-        console.log(this.digraph.calcNumberOfPossibleTrips('A-C', '=4'));
-        console.log(this.digraph.calcShortestRoute('A-C'));
-        console.log(this.digraph.calcShortestRoute('B-B'));
-        console.log(this.digraph.calcRouteCount('C-C', '<30'));
+        console.log(this.calcDistance('A-B-C'));
+        console.log(this.calcDistance('A-D'));
+        console.log(this.calcDistance('A-D-C'));
+        console.log(this.calcDistance('A-E-B-C-D'));
+        console.log(this.calcDistance('A-E-D'));
+        console.log(this.calcNumberOfPossibleTrips('C-C', '<=', '3'));
+        console.log(this.calcNumberOfPossibleTrips('A-C', '==', '4'));
+        //console.log(this.digraph.calcShortestRoute('A-C'));
+        //console.log(this.digraph.calcShortestRoute('B-B'));
+        //console.log(this.digraph.calcRouteCount('C-C', '<30'));
     }
+    return ''; // return nothing
 };
-
 /**
  * [calcDistance description]
  * @param  {[type]} path [description]
@@ -73,20 +73,58 @@ App.prototype.calcDistance = function(path) {
         try {
             distance = this.digraph.calcDistance(path);
         } catch (err) {
-            console.log(err);
+            return err;
         }
+        return distance;
     }
-    return distance;
 };
 
 /**
  * [calcNumberOfPossibleTrips description]
- * @param  {[type]} path  [description]
- * @param  {[type]} stops [description]
- * @return {[type]}       [description]
+ * @param  {[type]} path     [description]
+ * @param  {[type]} relation [description]
+ * @param  {[type]} stops    [description]
+ * @return {[type]}          [description]
  */
-App.prototype.calcNumberOfPossibleTrips = function(path, stops) {
-    this.digraph.calcNumberOfPossibleTrips(path, stops);
+App.prototype.calcNumberOfPossibleTrips = function(path, relation, stops) {
+    if (path && relation && ++stops) {
+        var allTrips, validTrips = new Array();
+
+        var nodes = path.split('-');
+        if (nodes.length === 2 && relation.match(/^:?(<|>|<=|>=|==){1}$/)) {
+            allTrips = this.digraph.getAllPaths(nodes[0], nodes[1], stops);
+            for (var trip of allTrips.keys()) {
+                switch (relation) {
+                    case '<':
+                        if (trip.length < stops)
+                            validTrips.push(trip);
+                        break;
+                    case '<=':
+                        if (trip.length <= stops)
+                            validTrips.push(trip);
+                        break;
+                    case '>':
+                        if (trip.length > stops)
+                            validTrips.push(trip);
+                        break;
+                    case '>=':
+                        if (trip.length >= stops)
+                            validTrips.push(trip);
+                        break;
+                    case '==':
+                        if (trip.length === stops) {
+                            validTrips.push(trip);
+                        }
+                        break;
+                    default:
+                        if (trip.length === stops)
+                            validTrips.push(trip);
+                        break;
+                }
+            }
+        }
+        return validTrips.length;
+    }
 };
 
 /**
@@ -94,9 +132,7 @@ App.prototype.calcNumberOfPossibleTrips = function(path, stops) {
  * @param  {[type]} path [description]
  * @return {[type]}      [description]
  */
-App.prototype.calcShortestRoute = function(path) {
-    this.digraph.calcShortestRoute(path);
-};
+App.prototype.calcShortestRoute = function(path) {};
 
 /**
  * [calcRouteCount description]
@@ -104,9 +140,7 @@ App.prototype.calcShortestRoute = function(path) {
  * @param  {[type]} distance [description]
  * @return {[type]}          [description]
  */
-App.prototype.calcRouteCount = function(path, distance) {
-    this.digraph.calcRouteCount(path, distance);
-};
+App.prototype.calcRouteCount = function(path, distance) {};
 
 /**
  * [readInputFile description]
@@ -128,17 +162,8 @@ App.readInputFile = function(inputFile) {
 App.buildDigraph = function(data) {
     if (data) {
         var digraph = new Digraph(data);
+        return digraph;
     }
-    return digraph;
-};
-
-/**
- * [printNetworkMap description]
- * @param  {[type]} digraph [description]
- * @return {[type]}         [description]
- */
-App.printNetworkMap = function(digraph) {
-    digraph.printNetworkMap(digraph);
 };
 
 module.exports = App;
