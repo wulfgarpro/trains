@@ -1,8 +1,9 @@
+[![wercker status](https://app.wercker.com/status/c64e3d7ddeafe4d9a27f61f37e635ebb/m "wercker status")](https://app.wercker.com/project/bykey/c64e3d7ddeafe4d9a27f61f37e635ebb)
+
 Problem one:
 ------------
 
 ### Trains:
-
 
 The local commuter railroad services a number of towns in Kiwiland.  Because of monetary concerns, all of the tracks are 'one-way.'  That is, a route from Kaitaia to Invercargill does not imply the existence of a route from Invercargill to Kaitaia.  In fact, even if both of these routes do happen to exist, they are distinct and are not necessarily the same distance!
 
@@ -11,7 +12,7 @@ The purpose of this problem is to help the railroad provide its customers with i
 Implementation:
 ---------------
 
-At it's core, Trains is a Directed Graph (Digraph) with an Adjacency List implementation.  Trains was written entirely in JavaScript using the Node.js runtime.  I chose a command line application with strictly synchronous functions to demonstrate JavaScript's ability to run as a systems language.  I followed TDD principles, focusing mainly on KISS and the single responsibility principle.  I did not deviate from JavaScript's classical inheritance model.
+At it's core, Trains is a Directed Graph (Digraph) with an Adjacency List implementation.  Trains was written entirely in JavaScript using the Node.js runtime.  I chose a command line application with strictly synchronous functions to demonstrate JavaScript's ability to run as a systems language.  I followed TDD principles, focusing mainly on KISS and the single responsibility principle.  Git and GitHub were used for versioning, and Wercker was used for CI.  I did not deviate from JavaScript's classical inheritance model.
 
 ### Design choices and assumptions:
 
