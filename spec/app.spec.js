@@ -30,16 +30,16 @@ describe('App', function(done) {
             expect(App.readInputFile).not.toHaveBeenCalled();
             done();
         });
-        it('Calls to build digraph', function(done) {
-            spyOn(App, 'buildDigraph');
+        it('Calls to get a digraph', function(done) {
+            spyOn(App, 'digraphFactory');
             app.constructor.call(app, testInputFile);
-            expect(App.buildDigraph).toHaveBeenCalled();
+            expect(App.digraphFactory).toHaveBeenCalled();
             done();
         });
-        it('Doesn\'t call to build digraph if no inputFile specified', function(done) {
-            spyOn(App, 'buildDigraph');
+        it('Doesn\'t call to get a digraph if no inputFile specified', function(done) {
+            spyOn(App, 'digraphFactory');
             app.constructor.call(app);
-            expect(App.buildDigraph).not.toHaveBeenCalled();
+            expect(App.digraphFactory).not.toHaveBeenCalled();
             done();
         });
     });
@@ -54,16 +54,10 @@ describe('App', function(done) {
             expect(data).toBe(testDataB);
             done();
         });
-        it('Throws Error if file doesn\'t exist', function(done) {
-            expect(function() {
-                App.readInputFile(testBogusInputFile);
-            }).toThrow('No such file.');
-            done();
-        });
     });
-    describe('buildDigraph(data)', function(done) {
+    describe('digraphFactory(data)', function(done) {
         it('Builds valid digraph from data string', function(done) {
-            var digraph = App.buildDigraph(testDataA);
+            var digraph = App.digraphFactory(testDataA);
             expect(digraph.nodes.get('A')).not.toBe(undefined);
             expect(digraph.nodes.get('B')).not.toBe(undefined);
             expect(digraph.nodes.get('C')).not.toBe(undefined);
@@ -78,12 +72,6 @@ describe('App', function(done) {
             expect(digraph.nodes.get('C').routes.get('E').weight).toBe(2);
             expect(digraph.nodes.get('E').routes.get('B').weight).toBe(3);
             expect(digraph.nodes.get('A').routes.get('E').weight).toBe(7);
-            done();
-        });
-    });
-    describe('printNetworkMap()', function(done) {
-        xit('Prints a valid network map from current digraph', function(done) {
-            expect(true).toBe(false, 'test not implemented');
             done();
         });
     });
@@ -110,13 +98,13 @@ describe('App', function(done) {
         });
     });
     describe('calcShortestRoute(path)', function(done) {
-        xit('Calculates shortest possible route', function(done) {
+        it('Calculates shortest possible route', function(done) {
             expect(true).toBe(false, 'test not implemented');
             done();
         });
     });
     describe('calcRouteCount(path, cb)', function(done) {
-        xit('Calculates number of unique routes with distance relationship', function(done) {
+        it('Calculates number of unique routes with distance relationship', function(done) {
             expect(true).toBe(false, 'test not implemented');
             done();
         });

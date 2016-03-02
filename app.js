@@ -38,7 +38,7 @@ var App = function(inputFile) {
         // Get data from input file
         var data = App.readInputFile(inputFile);
         // Create digraph
-        this.digraph = App.buildDigraph(data);
+        this.digraph = App.digraphFactory(data);
     }
 };
 
@@ -161,11 +161,11 @@ App.readInputFile = function(inputFile) {
 };
 
 /**
- * [buildDigraph description]
+ * [digraphFactory description]
  * @param  {[type]} data [description]
  * @return {[type]}      [description]
  */
-App.buildDigraph = function(data) {
+App.digraphFactory = function(data) {
     if (data) {
         var digraph = new Digraph(data);
         return digraph;
