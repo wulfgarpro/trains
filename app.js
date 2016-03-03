@@ -28,8 +28,11 @@ var Digraph = require('./lib/digraph'),
     Node = require('./lib/node');
 
 /**
- * [App description]
- * @param {[type]} inputFile [description]
+ * App constructor
+ *
+ * @param {string} inputFile
+ *        A string representing file path
+ *        i.e. './input.txt'
  */
 var App = function(inputFile) {
     this.digraph = {};
@@ -43,8 +46,7 @@ var App = function(inputFile) {
 };
 
 /**
- * [thoughtWorks description]
- * @return {[type]} [description]
+ * Helper to test ThoughtWorks test criteria
  */
 App.prototype.thoughtWorks = function() {
     if (this.digraph) {
@@ -62,12 +64,16 @@ App.prototype.thoughtWorks = function() {
             console.log(this.calcNumberOfPossibleRoutesWithDistance('C-C', '<', '30'));
         }
     }
-    return ''; // return nothing
+    return ''; // Return nothing
 };
+
 /**
- * [calcDistance description]
- * @param  {[type]} path [description]
- * @return {[type]}      [description]
+ * Calculate the distance of path
+ *
+ * @param  {string} path
+ *         A string representing the path to calc distance of
+ * @return {number}
+ *         The distance
  */
 App.prototype.calcDistance = function(path) {
     if (path) {
@@ -82,11 +88,64 @@ App.prototype.calcDistance = function(path) {
 };
 
 /**
- * [calcNumberOfPossibleTrips description]
- * @param  {[type]} path     [description]
- * @param  {[type]} relation [description]
- * @param  {[type]} stops    [description]
- * @return {[type]}          [description]
+ * Perform a relational comparison with value and filter
+ *
+ * @param  {number} value
+ *         The value to compare with
+ * @param  {string} relation
+ *         The relational operator
+ *         e.g. '<', or '>'
+ * @param  {number} filter
+ *         The value to compare to
+ * @return {number}
+ *         The original value if matched
+ */
+App.prototype.filterRoutes = function(value, relation, filter) {
+    if (value && relation && filter) {
+        switch (relation) {
+            case '<':
+                if (value < filter)
+                    return value;
+                break;
+            case '<=':
+                if (value <= filter)
+                    return value;
+                break;
+            case '>':
+                if (value > filter)
+                    return value;
+                break;
+            case '>=':
+                if (value >= filter)
+                    return value;
+                break;
+            case '==':
+                if (value === filter)
+                    return value;
+                break;
+            default:
+                if (value === filter)
+                    return value;
+                break;
+        }
+    }
+};
+
+/**
+ * Calculate the number of routes via path with
+ * <,>,<=,>= or == stops
+ *
+ * @param  {string} path
+ *         A string delimited representing a path
+ *         e.g. 'A-C'
+ * @param  {string} relation
+ *         A string representing a relationship
+ *         e.g. '<' or '>'
+ * @param  {number} stops
+ *         The maximum stops to filter valid routes
+ *         e.g. 3
+ * @return {number}
+ *         The number of matching routes
  */
 App.prototype.calcNumberOfPossibleRoutesWithStops = function(path, relation, stops) {
     if (path && relation && stops) {
@@ -94,123 +153,101 @@ App.prototype.calcNumberOfPossibleRoutesWithStops = function(path, relation, sto
         stops++;
 
         var nodes = utils.tokeniseNodes(path);
-        var validTrips = new Array();
-
         if (nodes.length === 2 && relation.match(/^:?(<|>|<=|>=|==){1}$/)) {
-            var allTrips = this.digraph.getAllPaths(nodes[0], nodes[1], stops);
-            for (var trip of allTrips.keys()) {
-                switch (relation) {
-                    case '<':
-                        if (trip.length < stops)
-                            validTrips.push(trip);
-                        break;
-                    case '<=':
-                        if (trip.length <= stops)
-                            validTrips.push(trip);
-                        break;
-                    case '>':
-                        if (trip.length > stops)
-                            validTrips.push(trip);
-                        break;
-                    case '>=':
-                        if (trip.length >= stops)
-                            validTrips.push(trip);
-                        break;
-                    case '==':
-                        if (trip.length === stops)
-                            validTrips.push(trip);
-                        break;
-                    default:
-                        if (trip.length === stops)
-                            validTrips.push(trip);
-                        break;
-                }
+            var validRoutes = new Array();
+            var allRoutes = this.digraph.getAllPaths(nodes[0], nodes[1], stops);
+
+            for (var route of allRoutes.keys()) {
+                // Length
+                var l = route.length;
+
+                var filtered = this.filterRoutes(l, relation, stops);
+                if (filtered)
+                    validRoutes.push(filtered);
             }
+            return validRoutes.length;
         }
-        return validTrips.length;
     }
 };
 
 /**
- * [calcShortestRoute description]
- * @param  {[type]} path [description]
- * @return {[type]}      [description]
+ * Calculate shortest route via path
+ *
+ * @param  {string} path
+ *         A string delimited representing a path
+ *         e.g. 'A-C'
+ * @return {number}
+ *         Length of shortest path
  */
 App.prototype.calcShortestRoute = function(path) {
     if (path) {
-        var shortestDistance, allTrips;
+        var shortestDistance, allRoutes;
 
         // Only 5 nodes in our sample data
         var stops = 5;
+
         // Starting point is a stop
         stops++;
 
         var nodes = utils.tokeniseNodes(path);
         if (nodes.length === 2) {
-            var allTrips = this.digraph.getAllPaths(nodes[0], nodes[1], stops);
-            for (var trip of allTrips.values()) {
+            var allRoutes = this.digraph.getAllPaths(nodes[0], nodes[1], stops);
+            for (var route of allRoutes.values()) {
                 if (!shortestDistance) {
-                    shortestDistance = trip;
-                } else if (trip < shortestDistance)
-                    shortestDistance = trip;
+                    shortestDistance = route;
+                } else if (route < shortestDistance)
+                    shortestDistance = route;
             }
         }
+        return shortestDistance;
     }
-    return shortestDistance;
 };
 
 /**
- * [calcRouteCount description]
- * @param  {[type]} path     [description]
- * @param  {[type]} distance [description]
- * @return {[type]}          [description]
+ * Calculate the number of routes via path with
+ * <,>,<=,>= or == distance
+ *
+ * @param  {string} path
+ *         A string delimited representing a path
+ *         e.g. 'A-C'
+ * @param  {string} relation
+ *         A string representing a relationship
+ *         e.g. '<' or '>'
+ * @param  {number} distance
+ *         The maximum distance (weight) to filter valid routes
+ * @return {number}
+ *         The number of matching routes
  */
+
 App.prototype.calcNumberOfPossibleRoutesWithDistance = function(path, relation, distance) {
     if (path && relation && distance) {
         var nodes = utils.tokeniseNodes(path);
-        var validTrips = new Array();
-
         if (nodes.length === 2 && relation.match(/^:?(<|>|<=|>=|==){1}$/)) {
+            var validRoutes = new Array();
             // Max 10 for our sample data
-            var allTrips = this.digraph.getAllPaths(nodes[0], nodes[1], 10);
-            for (var trip of allTrips.keys()) {
-                var tripDistance = allTrips.get(trip);
-                switch (relation) {
-                    case '<':
-                        if (tripDistance < distance)
-                            validTrips.push(trip);
-                        break;
-                    case '<=':
-                        if (tripDistance <= distance)
-                            validTrips.push(trip);
-                        break;
-                    case '>':
-                        if (tripDistance > distance)
-                            validTrips.push(trip);
-                        break;
-                    case '>=':
-                        if (tripDistance >= distance)
-                            validTrips.push(trip);
-                        break;
-                    case '==':
-                        if (tripDistance === distance)
-                            validTrips.push(trip);
-                        break;
-                    default:
-                        if (tripDistance === distance)
-                            validTrips.push(trip);
-                        break;
-                }
+            var allRoutes = this.digraph.getAllPaths(nodes[0], nodes[1], 10);
+            for (var route of allRoutes.keys()) {
+                // Distance
+                var d = allRoutes.get(route);
+
+                var filtered = this.filterRoutes(d, relation, distance);
+                if (filtered)
+                    validRoutes.push(filtered);
             }
+            return validRoutes.length;
         }
-        return validTrips.length;
     }
 };
 
 /**
- * [readInputFile description]
- * @param  {[type]} inputFile [description]
- * @return {[type]}           [description]
+ * Static function to read in input file, stripping
+ * whitespace
+ *
+ * @param  {inputFile} inputFile
+ *         A string file path
+ *         e.g. './input.txt'
+ * @return {string}
+ *         A string representing all lines read
  */
 App.readInputFile = function(inputFile) {
     try {
@@ -224,9 +261,13 @@ App.readInputFile = function(inputFile) {
 };
 
 /**
- * [digraphFactory description]
- * @param  {[type]} data [description]
- * @return {[type]}      [description]
+ * A factory to create digraph from route string
+ * input
+ *
+ * @param  {string} data
+ *         A string representing node routes
+ * @return {object}
+ *         The digraph of nodes (vertex) and routes (edges)
  */
 App.digraphFactory = function(data) {
     if (data) {
