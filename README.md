@@ -12,13 +12,13 @@ The purpose of this problem is to help the railroad provide its customers with i
 Implementation:
 ---------------
 
-At it's core, Trains is a Directed Graph (Digraph) with an Adjacency List implementation.  Trains was written entirely in JavaScript using the Node.js runtime.  I chose a command line application with strictly synchronous functions to demonstrate JavaScript's ability to run as a systems language.  I followed TDD principles, focusing mainly on KISS and the single responsibility principle.  Git and GitHub were used for versioning, and Wercker was used for CI.  I did not deviate from JavaScript's classical inheritance model.
+At it's core, Trains is a Directed Graph (Digraph) with an Adjacency List implementation.  Trains was written entirely in JavaScript using the Node.js runtime.  I chose a command line application with strictly synchronous functions to demonstrate JavaScript's ability to run as a systems language.  I followed TDD principles, focusing mainly on KISS and the single responsibility principle.  Git and GitHub were used for versioning, and Wercker was used for CI.  I did not deviate from JavaScript's prototypal inheritance model.
 
 ### Design choices and assumptions:
 
 A generic digraph (digraph.js) implementation sits at the core with an application wrapper (app.js) reading in an input file and instantiating an instance of said digraph.
 
-The digraph's vertices are nodes (node.js), and it's edges are routes (route.js).  Each node has an adjacency list, which is a JavaScript map using node names as keys and route objects as values.  The digraph most notably implements a basic depth first traversal (O(V + E)) for retrieving all paths from source to destination node with a bound.  The application wrapper makes use of the digraph's internal functionality to achieve most of the functionality outlined in the ThoughtWorks programming problem email.
+The digraph's vertices are nodes (node.js), and it's edges are routes (route.js).  Each node has a JavaScript map using node names as keys and route objects as values, to represent it's adjacency list.  The digraph  implements a basic depth first traversal (that is O(V + E)) for retrieving all paths from source to destination node with a defined bound.  The application wrapper makes calls to it's digraph instance to achieve most of the functionality outlined in the ThoughtWorks problem specification.
 
 It's assumed that calls to functions with invalid arguments are ignored and undefined is returned.
 
@@ -30,14 +30,18 @@ Future work:
 - Better error handling
 - More edge case  tests
 - Default argument values
+- Shortest path algorithm (Dijkstra)
 
 How to run:
 -----------
 
 1. Install latest Node.js for your platform
-2. Install jasmine-node globally: `$> npm install -G jasmine-node`
+2. Install jasmine-node globally: `$> npm install -g jasmine-node`
 3. Run tests: `$> npm test`
 4. Run runner: `$> ./bin/run input.txt` or   `$> ./bin/run --help`
+
+### Sample output:
+![output.png](./output.png)
 
 Licence:
 -------
