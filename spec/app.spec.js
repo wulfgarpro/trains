@@ -99,12 +99,13 @@ describe('App', function(done) {
     });
     describe('calcShortestRoute(path)', function(done) {
         it('Calculates shortest possible route', function(done) {
-            expect(true).toBe(false, 'test not implemented');
+            expect(app.calcShortestRoute('A-C')).toBe(9);
+            expect(app.calcShortestRoute('B-B')).toBe(9);
             done();
         });
     });
     describe('calcRouteCount(path, cb)', function(done) {
-        it('Calculates number of unique routes with distance relationship', function(done) {
+        xit('Calculates number of unique routes with distance relationship', function(done) {
             expect(true).toBe(false, 'test not implemented');
             done();
         });

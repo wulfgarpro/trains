@@ -57,8 +57,8 @@ App.prototype.thoughtWorks = function() {
             console.log(this.calcDistance('A-E-D'));
             console.log(this.calcNumberOfPossibleTrips('C-C', '<=', '3'));
             console.log(this.calcNumberOfPossibleTrips('A-C', '==', '4'));
-            //console.log(this.digraph.calcShortestRoute('A-C'));
-            //console.log(this.digraph.calcShortestRoute('B-B'));
+            console.log(this.calcShortestRoute('A-C'));
+            console.log(this.calcShortestRoute('B-B'));
             //console.log(this.digraph.calcRouteCount('C-C', '<30'));
         }
     }
@@ -89,12 +89,15 @@ App.prototype.calcDistance = function(path) {
  * @return {[type]}          [description]
  */
 App.prototype.calcNumberOfPossibleTrips = function(path, relation, stops) {
-    if (path && relation && ++stops) {
-        var allTrips, validTrips = new Array();
+    if (path && relation && stops) {
+        // Starting point is a stop
+        stops++;
 
-        var nodes = path.split('-');
+        var nodes = utils.tokeniseNodes(path);
+        var validTrips = new Array();
+
         if (nodes.length === 2 && relation.match(/^:?(<|>|<=|>=|==){1}$/)) {
-            allTrips = this.digraph.getAllPaths(nodes[0], nodes[1], stops);
+            var allTrips = this.digraph.getAllPaths(nodes[0], nodes[1], stops);
             for (var trip of allTrips.keys()) {
                 switch (relation) {
                     case '<':
@@ -134,7 +137,28 @@ App.prototype.calcNumberOfPossibleTrips = function(path, relation, stops) {
  * @param  {[type]} path [description]
  * @return {[type]}      [description]
  */
-App.prototype.calcShortestRoute = function(path) {};
+App.prototype.calcShortestRoute = function(path) {
+    if (path) {
+        var shortestDistance, allTrips;
+
+        // Only 5 nodes in our sample data
+        var stops = 5;
+        // Starting point is a stop
+        stops++;
+
+        var nodes = utils.tokeniseNodes(path);
+        if (nodes.length === 2) {
+            var allTrips = this.digraph.getAllPaths(nodes[0], nodes[1], stops);
+            for (var trip of allTrips.values()) {
+                if (!shortestDistance) {
+                    shortestDistance = trip;
+                } else if (trip < shortestDistance)
+                    shortestDistance = trip;
+            }
+        }
+    }
+    return shortestDistance;
+};
 
 /**
  * [calcRouteCount description]

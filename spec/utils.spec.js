@@ -67,4 +67,15 @@ describe('Utils', function(done) {
             done();
         });
     });
+    describe('tokeniseNodes(path)', function(done) {
+        it('Extracts nodes from path tokenised by "-"', function(done) {
+            var nodes = utils.tokeniseNodes('A-C');
+            expect(nodes.length).toBe(2);
+            expect(typeof nodes[0]).toBe('string');
+            expect(typeof nodes[1]).toBe('string');
+            expect(nodes[0]).toBe('A');
+            expect(nodes[1]).toBe('C');
+            done();
+        });
+    });
 });

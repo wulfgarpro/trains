@@ -42,8 +42,6 @@ if (/^--help$/.test(inputFile)) {
 }
 
 utils.printWelcome();
-
 if (!inputFile) printHelp();
-
 var app = new App(inputFile);
 app.thoughtWorks(); // ThoughtWorks tests
