@@ -55,11 +55,11 @@ App.prototype.thoughtWorks = function() {
             console.log(this.calcDistance('A-D-C'));
             console.log(this.calcDistance('A-E-B-C-D'));
             console.log(this.calcDistance('A-E-D'));
-            console.log(this.calcNumberOfPossibleTrips('C-C', '<=', '3'));
-            console.log(this.calcNumberOfPossibleTrips('A-C', '==', '4'));
+            console.log(this.calcNumberOfPossibleRoutesWithStops('C-C', '<=', '3'));
+            console.log(this.calcNumberOfPossibleRoutesWithStops('A-C', '==', '4'));
             console.log(this.calcShortestRoute('A-C'));
             console.log(this.calcShortestRoute('B-B'));
-            //console.log(this.digraph.calcRouteCount('C-C', '<30'));
+            console.log(this.calcNumberOfPossibleRoutesWithDistance('C-C', '<', '30'));
         }
     }
     return ''; // return nothing
@@ -88,7 +88,7 @@ App.prototype.calcDistance = function(path) {
  * @param  {[type]} stops    [description]
  * @return {[type]}          [description]
  */
-App.prototype.calcNumberOfPossibleTrips = function(path, relation, stops) {
+App.prototype.calcNumberOfPossibleRoutesWithStops = function(path, relation, stops) {
     if (path && relation && stops) {
         // Starting point is a stop
         stops++;
@@ -117,9 +117,8 @@ App.prototype.calcNumberOfPossibleTrips = function(path, relation, stops) {
                             validTrips.push(trip);
                         break;
                     case '==':
-                        if (trip.length === stops) {
+                        if (trip.length === stops)
                             validTrips.push(trip);
-                        }
                         break;
                     default:
                         if (trip.length === stops)
@@ -166,7 +165,47 @@ App.prototype.calcShortestRoute = function(path) {
  * @param  {[type]} distance [description]
  * @return {[type]}          [description]
  */
-App.prototype.calcRouteCount = function(path, distance) {};
+App.prototype.calcNumberOfPossibleRoutesWithDistance = function(path, relation, distance) {
+    if (path && relation && distance) {
+        var nodes = utils.tokeniseNodes(path);
+        var validTrips = new Array();
+
+        if (nodes.length === 2 && relation.match(/^:?(<|>|<=|>=|==){1}$/)) {
+            // Max 10 for our sample data
+            var allTrips = this.digraph.getAllPaths(nodes[0], nodes[1], 10);
+            for (var trip of allTrips.keys()) {
+                var tripDistance = allTrips.get(trip);
+                switch (relation) {
+                    case '<':
+                        if (tripDistance < distance)
+                            validTrips.push(trip);
+                        break;
+                    case '<=':
+                        if (tripDistance <= distance)
+                            validTrips.push(trip);
+                        break;
+                    case '>':
+                        if (tripDistance > distance)
+                            validTrips.push(trip);
+                        break;
+                    case '>=':
+                        if (tripDistance >= distance)
+                            validTrips.push(trip);
+                        break;
+                    case '==':
+                        if (tripDistance === distance)
+                            validTrips.push(trip);
+                        break;
+                    default:
+                        if (tripDistance === distance)
+                            validTrips.push(trip);
+                        break;
+                }
+            }
+        }
+        return validTrips;
+    }
+};
 
 /**
  * [readInputFile description]

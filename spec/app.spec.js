@@ -83,17 +83,17 @@ describe('App', function(done) {
             done();
         });
     });
-    describe('calcNumberOfPossibleTrips(path, relation, stops)', function(done) {
-        it('Calculates number of possible trips with max stops', function(done) {
-            expect(app.calcNumberOfPossibleTrips('C-C', '<=', 3)).toBe(2);
-            expect(app.calcNumberOfPossibleTrips('A-B', '<=', 3)).toBe(3);
-            expect(app.calcNumberOfPossibleTrips('A-E', '<=', 3)).toBe(4);
+    describe('calcNumberOfPossibleRoutesWithStops(path, relation, stops)', function(done) {
+        it('Calculates number of possible routes with max stops', function(done) {
+            expect(app.calcNumberOfPossibleRoutesWithStops('C-C', '<=', 3)).toBe(2);
+            expect(app.calcNumberOfPossibleRoutesWithStops('A-B', '<=', 3)).toBe(3);
+            expect(app.calcNumberOfPossibleRoutesWithStops('A-E', '<=', 3)).toBe(4);
             done();
         });
-        it('Calculates number of possible trips with exact stops', function(done) {
-            expect(app.calcNumberOfPossibleTrips('C-C', '==', 3)).toBe(1);
-            expect(app.calcNumberOfPossibleTrips('A-B', '==', 3)).toBe(1);
-            expect(app.calcNumberOfPossibleTrips('A-C', '==', 4)).toBe(3);
+        it('Calculates number of possible routes with exact stops', function(done) {
+            expect(app.calcNumberOfPossibleRoutesWithStops('C-C', '==', 3)).toBe(1);
+            expect(app.calcNumberOfPossibleRoutesWithStops('A-B', '==', 3)).toBe(1);
+            expect(app.calcNumberOfPossibleRoutesWithStops('A-C', '==', 4)).toBe(3);
             done();
         });
     });
@@ -104,9 +104,13 @@ describe('App', function(done) {
             done();
         });
     });
-    describe('calcRouteCount(path, cb)', function(done) {
-        xit('Calculates number of unique routes with distance relationship', function(done) {
-            expect(true).toBe(false, 'test not implemented');
+    describe('calcNumberOfPossibleRoutesWithDistance(path, relation, distance)', function(done) {
+        it('Calculates number of possible trips with less-than distance', function(done) {
+            expect(app.calcNumberOfPossibleRoutesWithDistance('C-C', '<', 30)).toEqual(['CDC', 'CDCEBC', 'CDEBC', 'CEBC', 'CEBCDC', 'CEBCEBC', 'CEBCEBCEBC']);
+            done();
+        });
+        it('Calculates number of possible trips with exact distance', function(done) {
+            expect(app.calcNumberOfPossibleRoutesWithDistance('C-C', '==', 30)).toEqual(['CDEBCEBC', 'CEBCDEBC']);
             done();
         });
     });
