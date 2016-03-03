@@ -52,12 +52,6 @@ describe('Digraph', function() {
             done();
         });
     });
-    describe('printNetworkMap()', function(done) {
-        xit('Prints a valid network map from current digraph', function(done) {
-            expect(true).toBe(false, 'test not implemented');
-            done();
-        });
-    });
     describe('calcDistance(path)', function(done) {
         it('Calculates distance of a defined path', function(done) {
             var digraph = new Digraph(testDataA);

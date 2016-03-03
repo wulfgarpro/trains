@@ -1,6 +1,5 @@
 var Digraph = require('./../lib/digraph'),
-    App = require('./../app'),
-    util = require('util');
+    App = require('./../app');
 
 describe('App', function(done) {
     var app,
@@ -111,12 +110,6 @@ describe('App', function(done) {
         });
         it('Calculates number of possible trips with exact distance', function(done) {
             expect(app.calcNumberOfPossibleRoutesWithDistance('C-C', '==', 30)).toEqual(['CDEBCEBC', 'CEBCDEBC']);
-            done();
-        });
-    });
-    describe('thoughtWorks()', function(done) {
-        xit('Runs through all requisite tests outlined in ThoughtWorks email', function(done) {
-            expect(true).toBe(false, 'test not implemented');
             done();
         });
     });
