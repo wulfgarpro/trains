@@ -20,8 +20,6 @@ A generic digraph (digraph.js) implementation sits at the core with an applicati
 
 The digraph's vertices are nodes (node.js), and it's edges are routes (route.js).  Each node has a JavaScript map using node names as keys and route objects as values, to represent it's adjacency list.  The digraph  implements a basic depth first traversal (that is O(V + E)) for retrieving all paths from source to destination node with a defined bound.  The application wrapper makes calls to it's digraph instance to achieve most of the functionality outlined in the ThoughtWorks problem specification.
 
-It's assumed that calls to functions with invalid arguments are ignored and undefined is returned.
-
 Future work:
 ------------
 
