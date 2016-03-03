@@ -105,11 +105,11 @@ describe('App', function(done) {
     });
     describe('calcNumberOfPossibleRoutesWithDistance(path, relation, distance)', function(done) {
         it('Calculates number of possible trips with less-than distance', function(done) {
-            expect(app.calcNumberOfPossibleRoutesWithDistance('C-C', '<', 30)).toEqual(['CDC', 'CDCEBC', 'CDEBC', 'CEBC', 'CEBCDC', 'CEBCEBC', 'CEBCEBCEBC']);
+            expect(app.calcNumberOfPossibleRoutesWithDistance('C-C', '<', 30)).toEqual(7);
             done();
         });
         it('Calculates number of possible trips with exact distance', function(done) {
-            expect(app.calcNumberOfPossibleRoutesWithDistance('C-C', '==', 30)).toEqual(['CDEBCEBC', 'CEBCDEBC']);
+            expect(app.calcNumberOfPossibleRoutesWithDistance('C-C', '==', 30)).toEqual(2);
             done();
         });
     });

@@ -203,7 +203,7 @@ App.prototype.calcNumberOfPossibleRoutesWithDistance = function(path, relation, 
                 }
             }
         }
-        return validTrips;
+        return validTrips.length;
     }
 };
 
